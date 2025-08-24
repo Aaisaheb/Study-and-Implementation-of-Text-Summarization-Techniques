@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Summarization</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0; 
+            background-color: #db84eb;
+        }
+     .container {
+            margin-left:350px;
+            margin-top: 25px;
+            max-width: 600px;
+            width: 100%;
+            padding: 20px;
+            box-shadow: 0 0 10px #81eef1(0, 0, 0, 0.1);
+            background-color: #611f6d;
+            border-radius: 5px;
+            /* margin:auto; */
+            text-align: center;
+        }
+        .input-text {
+            background-color: white;
+            width: 96%;
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #000000;
+            border-radius: 5px;
+            resize: vertical;
+            min-height: 200px;
+        }
+        .btn-summarize {
+            background-color: #021f02;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .summary {
+            background-color: white;
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #0c0101;
+            border-radius: 5px;
+            min-height: 100px;
+        }
+  
+.Container{
+    margin-top: 10px;
+border:2px solid gray;
+background-color: rgb(56, 2, 2);
+border-radius: 20px;
+
+}
+.navbar ul{
+    list-style: none;
+    display: inline-block;
+}
+.navbar ul li{
+    display:inline-block;
+    
+}
+.navbar ul li a{
+text-decoration: none;
+color: white;
+margin: 12px;
+}
+.navbar ul li a:hover{
+    color: red;
+   
+}
+h1{
+    color: whitesmoke;
+    margin-top: 5px;
+}
+
+
+    </style>
+</head>
+<body>
+
+<header class="Container" >
+    <nav class="navbar">
+     <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Contact Us</a></li>
+        <li><a href="#">History</a></li>
+     </ul>
+    </nav>
+</header>
+
+
+    <div class="container">
+        <h1>TFIDF Text Summarization</h1>
+        
+        <textarea id="inputText" class="input-text" placeholder="Enter text to summarize"></textarea>
+        <button onclick="summarizeText()" class="btn-summarize">Summarize</button>
+        <div id="summary" class="summary"></div>
+    </div>
+
+    <script>
+        function summarizeText() {
+            var inputText = document.getElementById("inputText").value;
+            if (!inputText.trim()) {
+                alert("Please enter some text to summarize.");
+                return;
+            }
+
+            fetch('/summarize', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(inputText)
+            })
+            .then(response => response.text())
+            .then(summary => {
+                document.getElementById("summary").innerText = summary;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert("An error occurred while summarizing the text.");
+            });
+        }
+    </script>
+</body>
+</html>
